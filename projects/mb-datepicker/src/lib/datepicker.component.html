@@ -1,27 +1,35 @@
 <div class="mb-datepicker__container" [attr.dir]="type === 'Ja' ? 'rtl' : 'ltr'" (click)="stopPropagation($event);" *ngIf="isOpen">
-    <div class="mb-datepicker__header">
-        <button mb-fab-button (click)="previousMonth()">
-            <i mbIcon="chevron-right"></i>
-        </button>
+    <div class="d-flex justify-content-between mb-3">
+        <button
+            class="btn chevron chevron--right"
+            (click)="previousMonth()"
+            type="button"></button>
 
-        <div>
-            <select [ngModel]="month + (type === 'Ge' ? 1 : 0)" (ngModelChange)="changeMonth($event -  + (type === 'Ge' ? 1 : 0))">
+        <div class="d-flex">
+            <select
+                class="form-control"
+                [ngModel]="month + (type === 'Ge' ? 1 : 0)"
+                (ngModelChange)="changeMonth($event -  + (type === 'Ge' ? 1 : 0))">
                 <option *ngFor="let month of months" [value]="month + 1 + (type === 'Ge' ? 1 : 0)">
                     {{monthName[month + (type === 'Ge' ? 1 : 0)]}}
                 </option>
             </select>
-            <select [ngModel]="year" (ngModelChange)="changeYear($event)">
-                <option *ngFor="let year of years" [value]="year">{{year}}
-                </option>
+
+            <select
+                class="form-control"
+                [ngModel]="year"
+                (ngModelChange)="changeYear($event)">
+                <option *ngFor="let year of years" [value]="year">{{year}}</option>
             </select>
         </div>
 
-        <button mb-fab-button (click)="forwardMonth()">
-            <i mbIcon="chevron-left"></i>
-        </button>
+        <button
+            class="btn chevron chevron--left"
+            (click)="forwardMonth()"
+            type="button"></button>
     </div>
 
-    <div class="mb-datepicker__content">
+    <div class="w-100">
         <div class="piker-container weekdays">
             <div class="picker weekday" *ngFor="let item of weekDays">{{item}}</div>
         </div>
@@ -41,20 +49,17 @@
                 <div class="last" *ngIf="type === 'Ja'">{{convert2gDate(date)}}
                 </div>
             </div>
-
-            <!--<div class="picker disabled"
-                 [class.day]="config.nextMonth"
-                 (click)="selectDate(date, config.nextMonth && !(date.getTime() < larger) && !(date.getTime() > smaller))"
-                 *ngFor="let date of nextMonth">
-                <div class="first">{{date.getDate()}}</div>
-                <div class="last" *ngIf="type === 'Ja'">1</div>
-            </div>-->
         </div>
     </div>
 
-    <div class="mb-datepicker__footer">
-        <button mb-button (click)="goToday()">امروز</button>
-        <button mb-button (click)="toggleType()">{{(type === 'Ja' ? 'میلادی' : 'شمسی')}}</button>
+    <div class="d-flex justify-content-between mt-3">
+        <button
+            class="btn btn-primary"
+            (click)="goToday()">امروز</button>
+
+        <button
+            class="btn btn-primary"
+            (click)="toggleType()">{{(type === 'Ja' ? 'میلادی' : 'شمسی')}}</button>
     </div>
 </div>
 
