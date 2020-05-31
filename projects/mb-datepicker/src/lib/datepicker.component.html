@@ -55,11 +55,13 @@
     <div class="d-flex justify-content-between mt-3">
         <button
             class="btn btn-primary"
-            (click)="goToday()">امروز</button>
+            (click)="goToday()"
+            type="button">امروز</button>
 
         <button
             class="btn btn-primary"
-            (click)="toggleType()">{{(type === 'Ja' ? 'میلادی' : 'شمسی')}}</button>
+            (click)="toggleType()"
+            type="button">{{(type === 'Ja' ? 'میلادی' : 'شمسی')}}</button>
     </div>
 </div>
 
