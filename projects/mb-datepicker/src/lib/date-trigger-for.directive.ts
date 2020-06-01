@@ -24,9 +24,12 @@ export class DateTriggerForDirective {
             .subscribe(isOpen => {
                 if (isOpen) {
                     this.datepicker.open();
-                    const datepickerElm = this.datepicker.elementRef.nativeElement as HTMLElement;
+                    const datepickerElm = this.datepicker.elementRef.nativeElement as HTMLElement,
+                        datepickerClientRect = datepickerElm.getBoundingClientRect(),
+                        windowHeight = document.body.clientHeight;
+
                     datepickerElm.style.left = clientRect.left + 'px';
-                    datepickerElm.style.top = clientRect.bottom + 'px';
+                    datepickerElm.style.top = (windowHeight < datepickerClientRect.bottom ? 0 : clientRect.bottom) + 'px';
                 } else {
                     this.datepicker.close();
                 }
