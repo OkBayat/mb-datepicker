@@ -22,15 +22,25 @@ export class DateTriggerForDirective {
         this.mouseEventService
             .click
             .subscribe(isOpen => {
+                const datepickerElm = this.datepicker.elementRef.nativeElement as HTMLElement;
+
                 if (isOpen) {
                     this.datepicker.open();
-                    const datepickerElm = this.datepicker.elementRef.nativeElement as HTMLElement,
-                        datepickerClientRect = datepickerElm.getBoundingClientRect(),
-                        windowHeight = document.body.clientHeight;
+                    const datepickerClientRect = datepickerElm.getBoundingClientRect();
+                    const windowHeight = document.body.clientHeight;
 
                     datepickerElm.style.left = clientRect.left + 'px';
-                    datepickerElm.style.top = (windowHeight < datepickerClientRect.bottom ? 0 : clientRect.bottom) + 'px';
+
+                    // If the datepickerElem goes out from bottom the window
+                    if (windowHeight < datepickerClientRect.bottom) {
+                        datepickerElm.style.bottom = '0';
+                    } else {
+                        datepickerElm.style.top = clientRect.bottom + 'px';
+                    }
                 } else {
+                    datepickerElm.style.bottom = 'unset';
+                    datepickerElm.style.top = 'unset';
+                    datepickerElm.style.left = 'unset';
                     this.datepicker.close();
                 }
             });
