@@ -3,13 +3,15 @@ import { MbDatepickerComponent } from './mb-datepicker.component';
 import {CommonModule} from '@angular/common';
 import {DateTriggerForDirective} from './date-trigger-for.directive';
 import {FormsModule} from '@angular/forms';
+import { DatepickerFooterDirective } from './datepicker-footer.directive';
 
 
 
 @NgModule({
   declarations: [
       MbDatepickerComponent,
-      DateTriggerForDirective
+      DateTriggerForDirective,
+      DatepickerFooterDirective
   ],
     imports: [
         CommonModule,
@@ -17,7 +19,8 @@ import {FormsModule} from '@angular/forms';
     ],
   exports: [
       MbDatepickerComponent,
-      DateTriggerForDirective
+      DateTriggerForDirective,
+      DatepickerFooterDirective
   ]
 })
 export class MbDatepickerModule { }

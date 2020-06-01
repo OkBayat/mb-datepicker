@@ -1,6 +1,20 @@
 <div class="backdrop">
     <div class="container">
-        <mb-datepicker #mbDate></mb-datepicker>
-        <div [mbDateTriggerFor]="mbDate">Click On me!</div>
+        <mb-datepicker
+            #mbDate="mbDatepicker"
+            [(ngModel)]="date">
+            <div class="d-flex justify-content-between" *mbDatepickerFooter>
+                <button
+                        class="btn btn-primary"
+                        (click)="mbDate.goToday()"
+                        type="button">امروز</button>
+
+                <button
+                        class="btn btn-primary"
+                        (click)="mbDate.toggleType()"
+                        type="button">{{mbDate.type === 'Ja' ? 'میلادی' : 'شمسی'}}</button>
+            </div>
+        </mb-datepicker>
+        <div [mbDateTriggerFor]="mbDate">Click On me! {{date}}</div>
     </div>
 </div>

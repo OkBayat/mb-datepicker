@@ -1,7 +1,7 @@
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component,
+    Component, ContentChild,
     ElementRef,
     EventEmitter,
     forwardRef,
@@ -14,6 +14,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MbDate} from 'mb-date/dist/src/abstract';
 import {JDate} from 'mb-date';
 import {GDate} from 'mb-date/dist/src/gdate';
+import {DatepickerFooterDirective} from './datepicker-footer.directive';
 
 
 const VALUE_ACCESSOR: any = {
@@ -53,7 +54,7 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
     private nextMonth: any[] = [];
     private today: number;
     private selectedDate: any;
-    private calcDate: any;
+    calcDate: any;
     type: string;
     isOpen = false;
     config: {
@@ -73,12 +74,22 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
     @Output() typeChange: EventEmitter<any> = new EventEmitter<any>();
     @Input() date;
     @Output() dateChange: EventEmitter<any> = new EventEmitter<any>();
+    @ContentChild(DatepickerFooterDirective) datepickerFooterTemp: DatepickerFooterDirective;
 
     /// Functions
     constructor(
         public elementRef: ElementRef,
         private changeDetectorRef: ChangeDetectorRef
     ) {}
+
+    // --------------------------------
+    open() {
+        this.getDate();
+        this.init();
+        this.isOpen = true;
+        this.changeDetectorRef.detectChanges();
+    }
+    // --------------------------------
 
     ngOnInit() {
         // const self = this;
@@ -108,12 +119,7 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
             this.hoverDate = this.selectedDate;
         }
     }
-    open() {
-        this.getDate();
-        this.init();
-        this.isOpen = true;
-        this.changeDetectorRef.detectChanges();
-    }
+
     close() {
         this.isOpen = false;
         this.changeDetectorRef.detectChanges();
@@ -122,7 +128,7 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
     /* ---------------------------------------------------------- */
     /* VALUE_ACCESSOR                                             */
     /* ---------------------------------------------------------- */
-    private propagateChange: any = () => {};
+    private propagateChange = (_) => { };
 
     writeValue(value: any) {
         this.date = value;
@@ -130,13 +136,16 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
         if (value) {
             this.gDate = new this.calendarType(value);
         }
+        this.propagateChange(this.date);
     }
 
     registerOnChange(fn) {
         this.propagateChange = fn;
     }
 
-    registerOnTouched(fn) {}
+    registerOnTouched(fn) {
+        // this.propagateChange = fn;
+    }
     /* ---------------------------------------------------------- */
 
     /**
@@ -232,7 +241,8 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
             this.dateChange.emit(this.date);
             // this.api.close();
             document.body.click();
-            this.propagateChange(date.gDate);
+            // this.propagateChange(date.gDate);
+            this.writeValue(date.gDate);
             this.gDate = date;
             /*if (this.api.selectDate) {
                 this.api.selectDate(date);
