@@ -4,6 +4,7 @@ import {CommonModule} from '@angular/common';
 import {DateTriggerForDirective} from './date-trigger-for.directive';
 import {FormsModule} from '@angular/forms';
 import { DatepickerFooterDirective } from './datepicker-footer.directive';
+import { MbDatePipe } from './mb-date.pipe';
 
 
 
@@ -11,7 +12,8 @@ import { DatepickerFooterDirective } from './datepicker-footer.directive';
   declarations: [
       MbDatepickerComponent,
       DateTriggerForDirective,
-      DatepickerFooterDirective
+      DatepickerFooterDirective,
+      MbDatePipe
   ],
     imports: [
         CommonModule,
@@ -20,7 +22,8 @@ import { DatepickerFooterDirective } from './datepicker-footer.directive';
   exports: [
       MbDatepickerComponent,
       DateTriggerForDirective,
-      DatepickerFooterDirective
+      DatepickerFooterDirective,
+      MbDatePipe
   ]
 })
 export class MbDatepickerModule { }

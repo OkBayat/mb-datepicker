@@ -3,4 +3,5 @@
  */
 
 export * from './lib/mb-datepicker.component';
+export * from './lib/mb-date.pipe';
 export * from './lib/mb-datepicker.module';
