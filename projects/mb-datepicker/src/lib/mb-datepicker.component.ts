@@ -15,6 +15,7 @@ import {MbDate} from 'mb-date/dist/src/abstract';
 import {JDate} from 'mb-date';
 import {GDate} from 'mb-date/dist/src/gdate';
 import {DatepickerFooterDirective} from './datepicker-footer.directive';
+import {BehaviorSubject} from 'rxjs';
 
 
 const VALUE_ACCESSOR: any = {
@@ -53,7 +54,7 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
     private calendarType: any;
     private nextMonth: any[] = [];
     private today: number;
-    private selectedDate: any;
+    selectedDate: any;
     calcDate: any;
     type: string;
     isOpen = false;
@@ -65,12 +66,12 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
         nextMonth: false
     };
     gDate: MbDate;
+    onUpdate = new BehaviorSubject(null);
 
     /// Inputs
     @Input() smallerThan;
     @Input() largerThan;
     @Input() periodHover;
-    @Input() api;
     @Output() typeChange: EventEmitter<any> = new EventEmitter<any>();
     @Input() date;
     @Output() dateChange: EventEmitter<any> = new EventEmitter<any>();
@@ -92,28 +93,8 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
     // --------------------------------
 
     ngOnInit() {
-        // const self = this;
-
         // Set calendar type for first time.
         this.setCalendarType();
-
-        /*this.api.open = () => {
-            this.getDate();
-            this.init();
-            this.isOpen = true;
-            setTimeout(() => document.addEventListener("click", close));
-            this.changeDetectorRef.detectChanges();
-        };
-
-        this.api.close = () => {
-            close();
-        };
-
-        function close(): void {
-            self.isOpen = false;
-            document.removeEventListener("click", close);
-            self.changeDetectorRef.detectChanges();
-        }*/
 
         if (this.periodHover) {
             this.hoverDate = this.selectedDate;
@@ -155,7 +136,6 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
     private setCalendarType(): void {
         this.type = 'Ja';
         this.calendarType = JDate;
-        // this.api.Date = this.calendarType;
     }
 
     private init() {
@@ -239,14 +219,9 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
             this.selectedDate = date;
             this.date = new Date(date.getTime());
             this.dateChange.emit(this.date);
-            // this.api.close();
             document.body.click();
-            // this.propagateChange(date.gDate);
             this.writeValue(date.gDate);
             this.gDate = date;
-            /*if (this.api.selectDate) {
-                this.api.selectDate(date);
-            }*/
         }
     }
 

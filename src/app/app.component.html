@@ -15,6 +15,7 @@
                         type="button">{{mbDate.type === 'Ja' ? 'میلادی' : 'شمسی'}}</button>
             </div>
         </mb-datepicker>
+        <input [mbDateTriggerFor]="mbDate" format="YYYY/MM/DD">
         <div [mbDateTriggerFor]="mbDate">Click On me! {{date}}</div>
     </div>
 </div>

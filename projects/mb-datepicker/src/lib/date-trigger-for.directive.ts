@@ -1,4 +1,4 @@
-import {Directive, ElementRef, HostListener, Input} from '@angular/core';
+import {Directive, ElementRef, HostListener, Input, OnInit} from '@angular/core';
 import {MbDatepickerComponent} from './mb-datepicker.component';
 import {MouseEventService} from './mouse-event.service';
 
@@ -6,13 +6,20 @@ import {MouseEventService} from './mouse-event.service';
     selector: '[mbDateTriggerFor]',
     providers: [MouseEventService]
 })
-export class DateTriggerForDirective {
+export class DateTriggerForDirective implements OnInit {
     @Input('mbDateTriggerFor') datepicker: MbDatepickerComponent;
+    @Input() format: string;
 
     constructor(
         private mouseEventService: MouseEventService,
         private elementRef: ElementRef
-    ) {}
+    ) { }
+
+    ngOnInit(): void {
+        if (this.format) {
+            this.subscribeDateChangesToFormatInputValue();
+        }
+    }
 
     @HostListener('click') private onClick() {
         const
@@ -46,4 +53,10 @@ export class DateTriggerForDirective {
             });
     }
 
+    private subscribeDateChangesToFormatInputValue(): void {
+        this.datepicker.dateChange.subscribe(() => {
+            this.elementRef.nativeElement.value =
+                this.datepicker.selectedDate.format(this.format);
+        });
+    }
 }
