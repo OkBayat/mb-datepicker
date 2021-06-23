@@ -116,6 +116,8 @@ export class MbDatepickerComponent implements OnInit, ControlValueAccessor {
 
         if (value) {
             this.gDate = new this.calendarType(value);
+            this.modifyDate(this.date);
+            this.dateChange.emit(this.date);
         }
         this.propagateChange(this.date);
     }

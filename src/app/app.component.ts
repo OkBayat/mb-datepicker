@@ -9,4 +9,8 @@ export class AppComponent {
   title = 'mb-libraries';
 
   date: Date;
+
+  constructor() {
+    this.date = new Date();
+  }
 }
