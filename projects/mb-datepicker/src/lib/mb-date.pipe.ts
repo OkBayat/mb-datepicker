@@ -7,6 +7,8 @@ import {JDate} from 'mb-date';
 export class MbDatePipe implements PipeTransform {
 
     transform(value: any, format: string): string {
+        if (!value) return value;
+
         const gDate = new Date(value);
         return new JDate(gDate.getTime()).format(format);
     }
